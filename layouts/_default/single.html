@@ -1,0 +1,19 @@
+{{ define "main" }}
+  {{ $coverPattern := .Params.cover | default "cover.*" }}
+  {{ $img := .Resources.GetMatch $coverPattern }}
+  <article class="mx-auto w-full max-w-4xl px-5 pb-20 md:px-8">
+    <a href="{{ "/" | relURL }}" class="link-hover text-xs uppercase tracking-[0.18em] text-black/60">Back to works</a>
+    <h1 class="mt-4 font-display text-5xl leading-none md:text-7xl">{{ .Title }}</h1>
+    <p class="mt-4 text-base text-black/70">{{ .Params.summary }}</p>
+
+    {{ if $img }}
+      <figure class="card-frame mt-8">
+        <img src="{{ $img.RelPermalink }}" alt="{{ .Params.image_alt | default .Title }}" class="h-auto w-full">
+      </figure>
+    {{ end }}
+
+    <div class="prose prose-stone mt-10 max-w-none prose-headings:font-display prose-a:text-accent">
+      {{ .Content }}
+    </div>
+  </article>
+{{ end }}

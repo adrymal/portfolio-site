@@ -1,0 +1,39 @@
+{{ $coverPattern := .Params.cover | default "cover.*" }}
+{{ $img := .Resources.GetMatch $coverPattern }}
+<article class="card-frame card-frame-lift group">
+  <a class="block cursor-pointer" href="{{ .RelPermalink }}">
+    <div class="relative aspect-[16/10] overflow-hidden md:aspect-[21/10]">
+      {{ if $img }}
+        <img
+          src="{{ $img.RelPermalink }}"
+          alt="{{ .Params.image_alt | default .Title }}"
+          class="h-full w-full object-cover object-center transition duration-500 ease-out group-hover:scale-[1.03]"
+          loading="eager"
+          decoding="async"
+        >
+      {{ end }}
+      <div class="absolute inset-0 bg-gradient-to-r from-white/90 via-white/72 to-white/12"></div>
+      {{ with .Params.badge }}
+        <div class="absolute right-5 top-5">
+          <span class="card-badge">{{ . }}</span>
+        </div>
+      {{ end }}
+      <div aria-hidden="true" class="absolute right-12 top-16 h-28 w-28 rounded-full border border-white/70 bg-sky-200/25 blur-sm"></div>
+      <div class="absolute inset-y-0 left-0 flex w-full max-w-3xl items-center p-6 md:p-9">
+        <div>
+          <div class="mb-4 flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-slate-600">
+            <span class="rounded-full border border-slate-200 bg-white px-3 py-1">Featured case</span>
+            <span class="rounded-full border border-slate-200 bg-white/90 px-3 py-1">{{ .Params.category | default (index (.Params.tags | default (slice "Work")) 0) }}</span>
+            <span>{{ .Params.year | default (.Date.Format "2006") }}</span>
+          </div>
+          <h1 class="max-w-3xl font-display text-5xl leading-[0.9] text-slate-950 md:text-[4.8rem]">{{ .Title }}</h1>
+          <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 md:text-base">{{ .Params.summary }}</p>
+          <div class="mt-6 inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white/90 px-4 py-2 text-sm text-slate-700 shadow-[0_12px_30px_-20px_rgba(15,23,42,0.25)]">
+            <span class="h-2 w-2 rounded-full bg-blue-500"></span>
+            Open project overview
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+</article>

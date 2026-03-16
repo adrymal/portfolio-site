@@ -1,0 +1,71 @@
+{{ define "main" }}
+  {{ $works := where .Site.RegularPages "Section" "works" }}
+  {{ $works = sort $works "Date" "desc" }}
+  {{ $featured := first 1 $works }}
+  {{ $rest := after 1 $works }}
+  {{ $categories := slice }}
+  {{ range $rest }}
+    {{ with .Params.category }}
+      {{ $categories = $categories | append . }}
+    {{ end }}
+  {{ end }}
+  {{ $categories = $categories | uniq | sort }}
+
+  <section class="relative mx-auto w-full max-w-7xl px-5 pb-16 md:px-8 md:pb-20">
+    <div aria-hidden="true" class="pointer-events-none absolute -left-8 top-20 h-44 w-44 rounded-full bg-blue-200/45 blur-3xl"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute -right-10 top-[26rem] h-52 w-52 rounded-full bg-violet-200/40 blur-3xl"></div>
+    {{ with index $featured 0 }}
+      {{ partial "featured-work-card.html" . }}
+    {{ end }}
+
+    <div class="mt-7 md:mt-8">
+      <div class="filter-scroll -mx-5 px-5 md:mx-0 md:px-0">
+        <div class="js-filters flex min-w-max gap-2.5 pb-1 md:min-w-0 md:flex-wrap md:gap-3 md:pb-0" role="toolbar" aria-label="Work category filters">
+        <button type="button" class="filter-chip is-active" data-filter="all" aria-pressed="true">All</button>
+        {{ range $categories }}
+          <button type="button" class="filter-chip" data-filter="{{ . | lower }}" aria-pressed="false">{{ . }}</button>
+        {{ end }}
+        </div>
+      </div>
+    </div>
+
+    <div id="works-grid" class="mt-8 grid gap-x-6 gap-y-8 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-10">
+      {{ range $rest }}
+        {{ partial "work-card.html" . }}
+      {{ end }}
+    </div>
+  </section>
+
+  <script>
+    (() => {
+      const filterRoot = document.querySelector('.js-filters');
+      const cards = Array.from(document.querySelectorAll('.js-work-card'));
+      if (!filterRoot || cards.length === 0) return;
+
+      const buttons = Array.from(filterRoot.querySelectorAll('[data-filter]'));
+      const setActive = (activeBtn) => {
+        buttons.forEach((btn) => {
+          const isActive = btn === activeBtn;
+          btn.classList.toggle('is-active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      };
+
+      const applyFilter = (value) => {
+        cards.forEach((card) => {
+          const category = (card.dataset.category || '').trim();
+          const match = value === 'all' || category === value;
+          card.classList.toggle('is-hidden', !match);
+        });
+      };
+
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const value = (btn.dataset.filter || 'all').trim();
+          setActive(btn);
+          applyFilter(value);
+        });
+      });
+    })();
+  </script>
+{{ end }}

@@ -1,0 +1,2 @@
+- Настроить `git config user.name` и `git config user.email` для первого коммита.
+- После этого выполнить первый commit и `git push -u origin main`.

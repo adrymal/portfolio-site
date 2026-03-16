@@ -1,0 +1,2 @@
+- Локальный git-репозиторий инициализирован, ветка `main` создана, `origin` указывает на `https://github.com/adrymal/portfolio-site.git`.
+- Удалённый GitHub-репозиторий выглядит пустым; для первого push осталось настроить git author и выполнить commit/push.

@@ -1,0 +1,123 @@
+{{ define "main" }}
+  {{ $coverPattern := .Params.cover | default "cover.*" }}
+  {{ $cover := .Resources.GetMatch $coverPattern }}
+  {{ $works := where .Site.RegularPages "Section" "works" }}
+  {{ $works = sort $works "Date" "desc" }}
+  {{ $gallery := slice }}
+  {{ $currentIndex := -1 }}
+  {{ range $index, $page := $works }}
+    {{ if eq $page.RelPermalink $.RelPermalink }}
+      {{ $currentIndex = $index }}
+    {{ end }}
+  {{ end }}
+  {{ $previousWork := false }}
+  {{ $nextWork := false }}
+  {{ if ge $currentIndex 0 }}
+    {{ if gt $currentIndex 0 }}
+      {{ $previousWork = index $works (sub $currentIndex 1) }}
+    {{ end }}
+    {{ if lt (add $currentIndex 1) (len $works) }}
+      {{ $nextWork = index $works (add $currentIndex 1) }}
+    {{ end }}
+  {{ end }}
+  {{ range .Resources.ByType "image" }}
+    {{ if or (not $cover) (ne (lower .Name) (lower $cover.Name)) }}
+      {{ $gallery = $gallery | append . }}
+    {{ end }}
+  {{ end }}
+
+  <article class="relative mx-auto w-full max-w-7xl px-5 pb-20 md:px-8">
+    <div aria-hidden="true" class="pointer-events-none absolute -left-12 top-16 h-40 w-40 rounded-full bg-blue-200/45 blur-3xl"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute -right-10 top-[24rem] h-44 w-44 rounded-full bg-violet-200/40 blur-3xl"></div>
+
+    {{ with $cover }}
+      <figure class="card-frame card-frame-lift relative">
+        <div aria-hidden="true" class="absolute right-5 top-5 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-slate-500">
+          Main visual
+        </div>
+        <img
+          src="{{ .RelPermalink }}"
+          alt="{{ $.Params.image_alt | default $.Title }}"
+          class="h-auto w-full object-cover transition duration-500 ease-out hover:scale-[1.01]"
+          loading="eager"
+          decoding="async"
+        >
+      </figure>
+    {{ end }}
+
+    <div class="project-summary relative mt-6 md:mt-8">
+      <a href="{{ "/" | relURL }}" class="link-hover text-xs uppercase tracking-[0.2em] text-slate-500">Back to cases</a>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <span class="meta-chip">Case study</span>
+        <span class="meta-chip">{{ .Params.year | default (.Date.Format "2006") }}</span>
+      </div>
+      <h1 class="mt-4 max-w-4xl font-display text-4xl leading-[0.92] text-slate-950 md:text-[4.4rem]">{{ .Title }}</h1>
+      <p class="mt-4 max-w-3xl text-base leading-relaxed text-slate-600 md:text-lg">{{ .Params.summary }}</p>
+
+      <dl class="mt-6 grid max-w-4xl grid-cols-1 gap-3 sm:grid-cols-3">
+        <div class="project-meta-card">
+          <dt class="text-[11px] uppercase tracking-[0.22em] text-slate-500">Category</dt>
+          <dd class="mt-2 text-base text-slate-900">{{ .Params.category | default (index (.Params.tags | default (slice "Work")) 0) }}</dd>
+        </div>
+        <div class="project-meta-card bg-blue-50/70">
+          <dt class="text-[11px] uppercase tracking-[0.22em] text-slate-500">Year</dt>
+          <dd class="mt-2 text-base text-slate-900">{{ .Params.year | default (.Date.Format "2006") }}</dd>
+        </div>
+        <div class="project-meta-card bg-sky-50/70">
+          <dt class="text-[11px] uppercase tracking-[0.22em] text-slate-500">Client</dt>
+          <dd class="mt-2 text-base text-slate-900">{{ .Params.client | default "Independent" }}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <section class="mt-10 border-t border-slate-200 pt-7 md:mt-12">
+      <div class="project-article">
+        <div class="project-content">
+        {{ .Content }}
+        </div>
+
+        {{ if gt (len $gallery) 0 }}
+          <div class="project-media">
+            {{ range $gallery }}
+              <figure class="project-media-item">
+                <img
+                  src="{{ .RelPermalink }}"
+                  alt="{{ $.Params.image_alt | default $.Title }}"
+                  class="w-full"
+                  loading="lazy"
+                  decoding="async"
+                >
+              </figure>
+            {{ end }}
+          </div>
+        {{ end }}
+      </div>
+    </section>
+
+    {{ if or $previousWork $nextWork }}
+      <nav class="mt-14 border-t border-slate-200 pt-8 md:mt-16" aria-label="Work pagination">
+        <div class="grid gap-4 md:grid-cols-2">
+          {{ with $previousWork }}
+            <a class="work-pager" href="{{ .RelPermalink }}">
+              <span class="work-pager-label">Previous work</span>
+              <strong class="work-pager-title">{{ .Title }}</strong>
+              <span class="work-pager-meta">{{ .Params.category | default "Work" }}</span>
+            </a>
+          {{ else }}
+            <div class="work-pager work-pager-empty" aria-hidden="true"></div>
+          {{ end }}
+
+          {{ with $nextWork }}
+            <a class="work-pager md:text-right md:items-end" href="{{ .RelPermalink }}">
+              <span class="work-pager-label">Next work</span>
+              <strong class="work-pager-title">{{ .Title }}</strong>
+              <span class="work-pager-meta">{{ .Params.category | default "Work" }}</span>
+            </a>
+          {{ else }}
+            <div class="work-pager work-pager-empty" aria-hidden="true"></div>
+          {{ end }}
+        </div>
+      </nav>
+    {{ end }}
+  </article>
+{{ end }}

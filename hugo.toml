@@ -1,0 +1,26 @@
+baseURL = 'https://example.org/'
+languageCode = 'ru-ru'
+title = 'Andrey Maleev'
+
+defaultContentLanguage = 'ru'
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 12
+
+[params]
+  description = 'Портфолио графического дизайнера и арт-директора: branding, visual identity, campaign и editorial design.'
+  email = 'hello@andreymaleev.com'
+
+  [params.social]
+    instagram = 'https://instagram.com/andreymaleev'
+    behance = 'https://www.behance.net/andreymaleev'
+    linkedin = 'https://www.linkedin.com/in/andreymaleev/'
+
+[taxonomies]
+  tag = 'tags'
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
