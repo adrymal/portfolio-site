@@ -1,2 +1,2 @@
-- Из production-сборки убраны сырьевые изображения из бывшего `content/img`; они вынесены в локальный `source-assets/` и больше не попадают в `public`.
-- Самый тяжелый production-файл (`kinetic-atlas/project-cover.png`, ~30.96 MiB) заменен на `project-cover.webp` (~2.29 MiB); итоговая сборка `hugo --panicOnWarning` проходит, файлов >25 MiB в `public` больше нет.
+- Для создания нового коммита без влияния на сайт в `README.md` добавлена одна уточняющая строка про Cloudflare Pages (`Framework preset: Hugo`).
+- Состояние production-сборки не менялось; сайт по-прежнему готов к деплою.

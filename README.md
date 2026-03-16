@@ -23,3 +23,4 @@ hugo
 
 - Build command: `hugo`
 - Build output directory: `public`
+- Framework preset: `Hugo`

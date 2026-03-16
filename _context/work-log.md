@@ -27,3 +27,4 @@
 - 2026-03-16: Инициализирован локальный git-репозиторий, подключен remote `origin` к GitHub; `.codex/` добавлен в `.gitignore`, удалённый репозиторий проверен как пустой.
 - 2026-03-16: Настроены локальные git author settings (`adrymal` / `adrymal@users.noreply.github.com`), создан первый commit; push в GitHub остановился на отсутствии HTTPS-аутентификации.
 - 2026-03-16: Для подготовки к Cloudflare Pages из production исключены сырьевые изображения `content/img`, тяжелая обложка `kinetic-atlas` перекодирована в WebP; файлов >25 MiB в `public` больше нет.
+- 2026-03-16: Для создания нового коммита без изменения сайта в `README.md` добавлена строка `Framework preset: Hugo` для Cloudflare Pages.
