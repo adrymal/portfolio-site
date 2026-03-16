@@ -1,0 +1,26 @@
+{{- $alt := .Text -}}
+{{- $title := .Title -}}
+{{- $destination := .Destination -}}
+{{- $rendered := false -}}
+
+{{- with .Page.Resources.GetMatch $destination -}}
+  {{- $processed := .Fit "1600x1600 webp q82" -}}
+  <img
+    src="{{ $processed.RelPermalink }}"
+    alt="{{ $alt }}"
+    {{ with $title }}title="{{ . }}"{{ end }}
+    loading="lazy"
+    decoding="async"
+  >
+  {{- $rendered = true -}}
+{{- end -}}
+
+{{- if not $rendered -}}
+  <img
+    src="{{ $destination | safeURL }}"
+    alt="{{ $alt }}"
+    {{ with $title }}title="{{ . }}"{{ end }}
+    loading="lazy"
+    decoding="async"
+  >
+{{- end -}}

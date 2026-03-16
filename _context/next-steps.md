@@ -1,2 +1,2 @@
-- Настроить `git config user.name` и `git config user.email` для первого коммита.
-- После этого выполнить первый commit и `git push -u origin main`.
+- Закоммитить cleanup: удаление `content/img` из сайта, переход `kinetic-atlas` на `project-cover.webp`, обновление image pipeline и `.gitignore`.
+- Опционально: позже можно дополнительно перекодировать несколько PNG по 6-8 MiB в bundles, если захочется еще сильнее уменьшить вес деплоя.

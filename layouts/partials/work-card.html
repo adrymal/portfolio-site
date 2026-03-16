@@ -1,11 +1,15 @@
 {{ $coverPattern := .Params.cover | default "cover.*" }}
 {{ $img := .Resources.GetMatch $coverPattern }}
+{{ $displayImg := $img }}
+{{ if $img }}
+  {{ $displayImg = $img.Fill "1200x750 webp q80" }}
+{{ end }}
 <article class="card-frame card-frame-lift group js-work-card" data-category="{{ .Params.category | default "" | lower }}">
   <a class="block cursor-pointer" href="{{ .RelPermalink }}">
     <div class="relative aspect-[16/10] overflow-hidden">
-      {{ if $img }}
+      {{ if $displayImg }}
         <img
-          src="{{ $img.RelPermalink }}"
+          src="{{ $displayImg.RelPermalink }}"
           alt="{{ .Params.image_alt | default .Title }}"
           class="h-full w-full object-cover object-center transition duration-500 ease-out group-hover:scale-[1.05]"
           loading="lazy"

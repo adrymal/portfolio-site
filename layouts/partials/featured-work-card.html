@@ -1,11 +1,15 @@
 {{ $coverPattern := .Params.cover | default "cover.*" }}
 {{ $img := .Resources.GetMatch $coverPattern }}
+{{ $displayImg := $img }}
+{{ if $img }}
+  {{ $displayImg = $img.Fit "1800x1200 webp q82" }}
+{{ end }}
 <article class="card-frame card-frame-lift group">
   <a class="block cursor-pointer" href="{{ .RelPermalink }}">
     <div class="relative aspect-[16/10] overflow-hidden md:aspect-[21/10]">
-      {{ if $img }}
+      {{ if $displayImg }}
         <img
-          src="{{ $img.RelPermalink }}"
+          src="{{ $displayImg.RelPermalink }}"
           alt="{{ .Params.image_alt | default .Title }}"
           class="h-full w-full object-cover object-center transition duration-500 ease-out group-hover:scale-[1.03]"
           loading="eager"

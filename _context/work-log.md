@@ -25,3 +25,5 @@
 - 2026-03-16: В header текстовый бренд заменен на локальный анимированный logo mark с bolt-мотивом; логотип реализован как inline SVG + CSS animation.
 - 2026-03-16: Проверена production-сборка `hugo`, подтвержден output `public`, добавлены `README.md` и `.gitignore` для подготовки к Cloudflare Pages.
 - 2026-03-16: Инициализирован локальный git-репозиторий, подключен remote `origin` к GitHub; `.codex/` добавлен в `.gitignore`, удалённый репозиторий проверен как пустой.
+- 2026-03-16: Настроены локальные git author settings (`adrymal` / `adrymal@users.noreply.github.com`), создан первый commit; push в GitHub остановился на отсутствии HTTPS-аутентификации.
+- 2026-03-16: Для подготовки к Cloudflare Pages из production исключены сырьевые изображения `content/img`, тяжелая обложка `kinetic-atlas` перекодирована в WebP; файлов >25 MiB в `public` больше нет.

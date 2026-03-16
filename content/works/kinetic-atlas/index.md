@@ -8,7 +8,7 @@ year: "2026"
 client: "Gridline Development"
 tags: ["Campaign Design", "Art Direction", "Key Visual"]
 badge: "Новинка"
-cover: "project-cover.png"
+cover: "project-cover.webp"
 image_alt: "Рекламный визуал жилого проекта с широкой перспективой"
 ---
 

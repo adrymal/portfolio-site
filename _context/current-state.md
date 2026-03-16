@@ -1,2 +1,2 @@
-- Локальный git-репозиторий инициализирован, ветка `main` создана, `origin` указывает на `https://github.com/adrymal/portfolio-site.git`.
-- Удалённый GitHub-репозиторий выглядит пустым; для первого push осталось настроить git author и выполнить commit/push.
+- Из production-сборки убраны сырьевые изображения из бывшего `content/img`; они вынесены в локальный `source-assets/` и больше не попадают в `public`.
+- Самый тяжелый production-файл (`kinetic-atlas/project-cover.png`, ~30.96 MiB) заменен на `project-cover.webp` (~2.29 MiB); итоговая сборка `hugo --panicOnWarning` проходит, файлов >25 MiB в `public` больше нет.
